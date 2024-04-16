@@ -1,15 +1,69 @@
-<script setup></script>
+<script setup>
+import { computed, onMounted } from "vue";
+import { AppState } from "../AppState.js";
+import { artService } from "../services/ArtService.js";
+import Pop from "../utils/Pop.js";
+import { Art } from "../models/Art.js";
+
+
+
+const myArtwork = computed(()=> AppState.myArtwork)
+
+onMounted(()=>{
+  getArt()
+})
+
+
+
+async function getArt(){
+  try {
+    await artService.getArt()
+
+  } catch (error) {
+    Pop.toast ("Couldn't get Artwork", 'error')
+    console.error(error)
+  }
+}
+
+async function changePage(pageNumber){
+  try {
+    await artService.changePage(pageNumber)
+  } catch (error) {
+    Pop.toast("Couldn't not change page", 'error')
+    console.error(error)
+  }
+}
+
+
+</script>
 
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 card align-items-center shadow rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+
+<div class="container-fluid">
+
+    <!-- <div class="col-3 p-2" v-for="image in myArtwork" :key="image.slug">
+      <img :src="image.imgUrls" class="img-fluid" alt="">
+      <div class="card px-3">
+{{ image.description }}
+</div>
+    </div> -->
+<section class="row d-flex justify-content-between m-3">
+  <div class="col-4">
+    <button :disabled="AppState.currentPage == 1" class="btn btn-primary w-100" @click="changePage(AppState.currentPage - 1)">Previous Page</button>
   </div>
+  <div class="col-4 text-center">Page {{ AppState.currentPage }} of {{ AppState.Pages }}</div>
+  <div class="col-4">
+    <button :disabled="AppState.currentPage == AppState.Pages" class="btn btn-primary w-100" @click="changePage(AppState.currentPage + 1)">Next Page</button>
+  </div>
+</section>
+
+
+    <div class="artwork row">
+      <ArtworkCard v-for="image in myArtwork" :key="image.slug" :art="image" class="col-3 mt-2 p-2"/>
+    </div>
+
+    
+</div>
 </template>
 
 <style scoped lang="scss">
