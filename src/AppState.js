@@ -16,5 +16,7 @@ currentPage: 1,
 
 Pages: 35,
 
+/**@type {{admirers}[]} */
+admirers: []
 
 })

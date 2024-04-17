@@ -21,6 +21,21 @@ async changePage(pageNumber){
   AppState.Pages = response.data.pages
 }
 
+ /**
+   * Description
+   * @param {Art} artworkId
+   * @returns {Promise<void>}
+   */
+async admireArt(artworkId){
+  const response = await api.post(`api/artworks/${artworkId}/admire`)
+  console.log('🖼️', response.data)
+ const admirerToUpdate = AppState.admirers.findIndex(art => artworkId.id == artworkId.id)
+ AppState.admirers.splice(admirerToUpdate, 1)
+ AppState.admirers.push(new Art(response.data))
+// const art = new Art(response.data)
+// AppState.admirers.splice(art.id, 1)
+// AppState.admirers.push(art)
+}
 
 
 
