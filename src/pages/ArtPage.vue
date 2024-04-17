@@ -1,6 +1,8 @@
 <script setup>
+import { Art } from "../models/Art.js";
 
 
+defineProps ({art: Art})
 
 
 
@@ -16,10 +18,14 @@
 <div class="row">
 
 <div class="col">
-  
+
+ 
+  {{ art.imgUrls}}
+
+  </div>
 </div>
 
-</div>
+
 </section>
 
 
