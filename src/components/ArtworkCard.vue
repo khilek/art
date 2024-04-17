@@ -20,14 +20,17 @@ async function admireArt(artworkId){
 
 
 <template>
+  <RouterLink :to="{name: 'Art Page', params: {artworkId: art.id}}" class="selectable">
+
+
     <div  >
-      
       <img :src="art.imgUrls" class="img-fluid" alt="">
       <div class="card px-3">
         <button @click="admireArt(art.id)">SAVE</button>
       {{ art.description }}
       </div>
     </div>
+  </RouterLink>
 </template>
 
 
