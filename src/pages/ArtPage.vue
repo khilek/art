@@ -20,7 +20,7 @@ defineProps ({art: Art})
 <div class="col">
 
  
-  {{ art.imgUrls}}
+
 
   </div>
 </div>
